@@ -87,7 +87,7 @@ int start() {
    sma10New = iMA(NULL,0,10,0, MODE_SMA, PRICE_CLOSE, 1);
    sma10Old = iMA(NULL,0,10,0, MODE_SMA, PRICE_CLOSE, 2);
    sma40New = iMA(NULL,0,40,0, MODE_SMA, PRICE_CLOSE, 1);
-   sma40New = iMA(NULL,0,40,0, MODE_SMA, PRICE_CLOSE, 1);
+   sma40Old = iMA(NULL,0,40,0, MODE_SMA, PRICE_CLOSE, 2);
    
    StopLevel = MarketInfo(Symbol(), MODE_STOPLEVEL) + MarketInfo(Symbol(), MODE_SPREAD); // Defining minimum StopLevel
 
@@ -119,7 +119,7 @@ int start() {
                Trailing stop of 30 pips
             */
             
-            if(sma10Old > sma40Old && sma10New <= sma40New) Order = SIGNAL_CLOSEBUY; // Rule to EXIT a Long trade
+            if(sma10Old > sma40Old && sma40New >= sma10New) Order = SIGNAL_CLOSEBUY; // Rule to EXIT a Long trade
 
             //+------------------------------------------------------------------+
             //| Signal End(Exit Buy)                                             |
@@ -147,7 +147,7 @@ int start() {
             //| Signal Begin(Exit Sell)                                          |
             //+------------------------------------------------------------------+
 
-            if (sma40Old > sma10Old && sma40New <= sma10New) Order = SIGNAL_CLOSESELL; // Rule to EXIT a Short trade
+            if (sma40Old > sma10Old && sma10New >= sma40New) Order = SIGNAL_CLOSESELL; // Rule to EXIT a Short trade
 
             //+------------------------------------------------------------------+
             //| Signal End(Exit Sell)                                            |
@@ -181,9 +181,9 @@ int start() {
       Enter a short trade when SMA(10) crosses SMA(40) from top
    */
 
-   if(sma40Old > sma10Old && sma40New <= sma10New) Order = SIGNAL_BUY; // Rule to ENTER a Long trade
+   if(sma40Old > sma10Old && sma10New >= sma40New) Order = SIGNAL_BUY; // Rule to ENTER a Long trade
 
-   if(sma10Old > sma40Old && sma10New <= sma40New) Order = SIGNAL_SELL; // Rule to ENTER a Short trade
+   if(sma10Old > sma40Old && sma40New >= sma10New) Order = SIGNAL_SELL; // Rule to ENTER a Short trade
 
 
    //+------------------------------------------------------------------+
