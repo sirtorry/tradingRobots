@@ -109,7 +109,7 @@ int start() {
    if (TakeProfit < StopLevel) TakeProfit = StopLevel;
    
    if (isSizingOn == true) {
-      Lots = Risk * 0.01 * AccountBalance() / (MarketInfo(Symbol(),MODE_LOTSIZE) * StopLoss * P * Point); // Sizing Algo based on account size
+      Lots = Risk * 0.01 * AccountBalance() / (MarketInfo(Symbol(),MODE_LOTSIZE) * MarketInfo(Symbol(),MODE_TICKVALUE) * StopLoss * P * Point); // Sizing Algo based on account size
       if(isYenPair == true) Lots = Lots * 100; // Adjust for Yen Pairs
       
       Lots = NormalizeDouble(Lots, 2); // Round to 2 decimal place
